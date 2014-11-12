@@ -9,32 +9,31 @@ import java.util.ArrayList;
 public class LerCSV
 {
 
-    private static final String cvsSplitBy = ";";
+    private static final String cvsSplitBy = ",";
  
     public LerCSV() 
     {
+    	
     }
  
     public ArrayList<Livro> carregarLivros() 
     {
-        String csvFile = "/home/henrique/Downloads/BX-CSV-Dump/BX-Books.csv";
+        String csvFile = "C:/BX-Books.csv";
         BufferedReader br = null;
         String line;
         ArrayList<Livro> aLivros = new ArrayList<>();
         
         try 
         {
-
             br = new BufferedReader(new FileReader(csvFile));
             line = br.readLine();
-            while ((line = br.readLine()) != null) 
+            while((line = br.readLine()) != null) 
             {
-                String[] livro = line.split(cvsSplitBy);
-                Livro l = new Livro(Long.parseLong(livro[0]), livro[1]);
-                aLivros.add(l);
+        		String[] livro = line.split(cvsSplitBy);
+    			Livro l = new Livro(Long.parseLong(livro[0].replaceAll("\\D+","")), livro[1]);
+    			aLivros.add(l);
             }
-
-        } 
+        }
         catch (FileNotFoundException e) 
         {
             e.printStackTrace();
@@ -62,7 +61,7 @@ public class LerCSV
  
     public ArrayList<Usuario> carregarUsuarios() 
     {
-        String csvFile = "/home/henrique/Downloads/BX-CSV-Dump/BX-Users.csv";
+        String csvFile = "C:/BX-Users.csv";
         BufferedReader br = null;
         String line;
         ArrayList<Usuario> aUsuarios = new ArrayList<>();
@@ -74,9 +73,10 @@ public class LerCSV
             line = br.readLine();
             while ((line = br.readLine()) != null) 
             {
+            	line.replaceAll("\"", "");
                 String[] usuario = line.split(cvsSplitBy);
-                String[] local = usuario[1].split(",");
-                Usuario u = new Usuario(Integer.parseInt(usuario[0]), Integer.parseInt(local[0]), local[1], local[2] , usuario[2]);
+               // System.out.println(usuario[0]);
+                Usuario u = new Usuario(Integer.parseInt(usuario[0].replaceAll("\\D+","")), usuario[1], usuario[2], usuario[3], Integer.parseInt(usuario[4].replaceAll("NULL", "0")));
                 aUsuarios.add(u);
             }
         } 
@@ -107,7 +107,7 @@ public class LerCSV
     
     public ArrayList<Rating> carregarRating() 
     {
-        String csvFile = "/home/henrique/Downloads/BX-CSV-Dump/BX-Book-Ratings.csv";
+        String csvFile = "C:/BX-Book-Ratings.csv";
         BufferedReader br = null;
         String line;
         ArrayList<Rating> aRating = new ArrayList<>();
@@ -120,7 +120,7 @@ public class LerCSV
             while ((line = br.readLine()) != null) 
             {
                 String[] rating = line.split(cvsSplitBy);
-                Rating r = new Rating(Integer.parseInt(rating[0]), Long.parseLong(rating[1]), Integer.parseInt(rating[2]));
+                Rating r = new Rating(Integer.parseInt(rating[0].replaceAll("\\D+","")), Long.parseLong(rating[1].replaceAll("\\D+","")), Integer.parseInt(rating[2].replaceAll("\\D+","")));
                 aRating.add(r);
             }
        } 
