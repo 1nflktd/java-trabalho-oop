@@ -2,16 +2,7 @@ package javaapplication1;
 
 import java.io.Serializable;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author henrique
- */
-public class Usuario implements Serializable
+class Usuario implements Serializable, Comparable<Usuario>
 {
     
     private int id;
@@ -20,7 +11,7 @@ public class Usuario implements Serializable
     private String state;
     private String country;
     
-    public Usuario(int id, int age, String city, String state, String country)
+    public Usuario(int id, String city, String state, String country, int age)
     {
         this.id = id;
         this.age = age;
@@ -28,5 +19,10 @@ public class Usuario implements Serializable
         this.state = state;
         this.country = country;
     }
+
+	@Override
+	public int compareTo(Usuario usuario) {
+		return this.country.compareTo(usuario.country);
+	}
     
 }
