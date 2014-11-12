@@ -2,19 +2,11 @@ package javaapplication1;
 
 import java.io.Serializable;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author henrique
- */
-public class Livro implements Serializable
+public class Livro implements Serializable, Comparable<Livro>
 {
     
-    private long isbn;
+	private static final long serialVersionUID = 1L;
+	private long isbn;
     private String titulo;
     
     public Livro()
@@ -24,8 +16,29 @@ public class Livro implements Serializable
     
     public Livro(long isbn, String titulo)
     {
-        this.isbn = isbn;
-        this.titulo = titulo;
+        this.setIsbn(isbn);
+        this.setTitulo(titulo);
     }
+
+	public long getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(long isbn) {
+		this.isbn = isbn;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	@Override
+	public int compareTo(Livro livro) {
+		return this.titulo.compareTo(livro.titulo);
+	}
     
 }
