@@ -12,16 +12,13 @@ public class SerializarClasse {
     public void serializarLista(ArrayList<?> lista, String caminho) throws IOException
     {
         ObjectOutputStream streamObj = new ObjectOutputStream(new FileOutputStream(caminho));
-        streamObj.writeObject(lista);
-        streamObj.close();
+        streamObj.writeObject(lista);		
     }
     
-    public void lerObj(ArrayList<?> aLista, String caminho) throws IOException, ClassNotFoundException
+    public ArrayList<?> lerObj(String caminho) throws IOException, ClassNotFoundException
     {
         ObjectInputStream stream = new ObjectInputStream(new FileInputStream(caminho));
-        aLista = (ArrayList<?>) stream.readObject();
-        stream.close();
-        //return aLista;
+		return (ArrayList<?>) stream.readObject();
     }
 
 

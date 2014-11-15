@@ -68,15 +68,44 @@ public class LerCSV
         
         try 
         {
-
             br = new BufferedReader(new FileReader(csvFile));
             line = br.readLine();
             while ((line = br.readLine()) != null) 
             {
-            	line.replaceAll("\"", "");
+            	line = line.replaceAll("\"", "");
                 String[] usuario = line.split(cvsSplitBy);
                // System.out.println(usuario[0]);
-                Usuario u = new Usuario(Integer.parseInt(usuario[0].replaceAll("\\D+","")), usuario[1], usuario[2], usuario[3], Integer.parseInt(usuario[4].replaceAll("NULL", "0")));
+				int id;
+				try {
+					id = Integer.parseInt(usuario[0].replaceAll("\\D+",""));
+				} catch (Exception e) {
+					id = 0;
+				}
+				String city;
+				try {
+					city = usuario[1].trim();
+				} catch (Exception e) {
+					city = "";
+				}
+				String state;
+				try {
+					state = usuario[2].trim();
+				} catch (Exception e) {
+					state = "";
+				}
+				String country;
+				try {
+					country = usuario[3].trim();
+				} catch (Exception e) {
+					country = "";
+				}
+				int age;
+				try {
+					age = Integer.parseInt(usuario[4].replaceAll("NULL", "0"));
+				} catch (Exception e) {
+					age = 0;
+				}
+                Usuario u = new Usuario(id, city, state, country, age);
                 aUsuarios.add(u);
             }
         } 
@@ -120,7 +149,25 @@ public class LerCSV
             while ((line = br.readLine()) != null) 
             {
                 String[] rating = line.split(cvsSplitBy);
-                Rating r = new Rating(Integer.parseInt(rating[0].replaceAll("\\D+","")), Long.parseLong(rating[1].replaceAll("\\D+","")), Integer.parseInt(rating[2].replaceAll("\\D+","")));
+				Long usuario_id;
+				try {
+					usuario_id = Long.parseLong(rating[0].replaceAll("\\D+",""));
+				} catch (Exception e) {
+					usuario_id = 0L;
+				}
+				Long isbn;
+				try {
+					isbn = Long.parseLong(rating[1].replaceAll("\\D+",""));
+				} catch (Exception e) {
+					isbn = 0L;
+				}
+				int rating_;
+				try {
+					rating_= Integer.parseInt(rating[2].replaceAll("\\D+",""));
+				} catch (Exception e) {
+					rating_= 0;
+				}
+                Rating r = new Rating(usuario_id, isbn, rating_);
                 aRating.add(r);
             }
        } 
