@@ -47,9 +47,23 @@ public class Main {
 		} catch (Exception e) {
 			carregar();
 		}
-		Ordenacao.ordenar(aLivros);
+		
+		System.out.println("Ordenar Livros");
+		Ordenacao.mergeSort(aLivros);
 		for	(Livro livro : aLivros) {
 			System.out.println(livro.getTitulo());
+		}
+		
+		System.out.println("Ordenar Usuarios");
+		Ordenacao.mergeSort(aUsuario);
+		for	(Usuario usuario : aUsuario) {
+			System.out.println(usuario.getCountry());
+		}
+		
+		System.out.println("Ordenar Ratings");
+		Ordenacao.mergeSort(aRating);
+		for	(Rating rating : aRating) {
+			System.out.println(rating.getRating());
 		}
 	}
 }
