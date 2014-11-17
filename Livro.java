@@ -4,21 +4,21 @@ import java.io.Serializable;
 
 public class Livro implements Serializable, Comparable<Livro>
 {
-    
+
 	private static final long serialVersionUID = 1L;
 	private long isbn;
-    private String titulo;
-    
-    public Livro()
-    {
-        
-    }
-    
-    public Livro(long isbn, String titulo)
-    {
-        this.setIsbn(isbn);
-        this.setTitulo(titulo);
-    }
+	private String titulo;
+
+	public Livro()
+	{
+
+	}
+
+	public Livro(long isbn, String titulo)
+	{
+		this.setIsbn(isbn);
+		this.setTitulo(titulo);
+	}
 
 	public long getIsbn() {
 		return isbn;
@@ -38,7 +38,7 @@ public class Livro implements Serializable, Comparable<Livro>
 
 	@Override
 	public int compareTo(Livro livro) {
-		return this.titulo.compareTo(livro.titulo);
+		return this.titulo.toUpperCase().compareTo(livro.titulo.toUpperCase());
 	}
-    
+
 }
