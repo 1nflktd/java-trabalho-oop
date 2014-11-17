@@ -12,12 +12,12 @@ public class Rating implements Serializable, Comparable<Rating> {
 	public Rating(long usuario_id, long isbn, int rating) {
 		this.setUsuario_id(usuario_id);
 		this.setIsbn(isbn);
-		this.rating = rating;
+		this.setRating(rating);
 	}
 
 	@Override
 	public int compareTo(Rating rating) {
-		return this.rating - rating.rating;
+		return this.getRating() - rating.getRating();
 	}
 
 	public long getUsuario_id() {
@@ -34,6 +34,14 @@ public class Rating implements Serializable, Comparable<Rating> {
 
 	public void setIsbn(long isbn) {
 		this.isbn = isbn;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 }
