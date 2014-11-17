@@ -1,41 +1,62 @@
 package javaapplication1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Ordenacao {
 
-	public static void ordenar(List lista) {
-		ordenar(lista, 0, lista.size() - 1);
-	}
+	public static <T extends Comparable<T>> void mergeSort(List<T> lista)
+	{
+		if (lista.size() > 1)
+		{
+			List<T> temp = lista.subList(0, lista.size() / 2);
 
-	private static void ordenar(List lista, int inicio, int fim) {
-		if (inicio < fim) {
-			int posicaoPivo = separar(lista, inicio, fim);
-			ordenar(lista, inicio, posicaoPivo - 1);
-			ordenar(lista, posicaoPivo + 1, fim);
+			ArrayList<T> esq = new ArrayList<T>(0);
+			for (T obj : temp) {
+				esq.add(obj);
+			}
+
+			temp = lista.subList(lista.size() / 2, lista.size());
+
+			ArrayList<T> dir = new ArrayList<T>(0);
+			for (T obj : temp) {
+				dir.add(obj);
+			}
+
+			if (dir.size() != 1) {
+				mergeSort(dir);
+			}
+			if (esq.size() != 1) {
+				mergeSort(esq);
+			}
+
+			lista.clear();
+			lista.addAll(mergeSortedLists(esq, dir));
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private static int separar(List lista, int inicio, int fim) {
-		Comparable<Object> pivo = ((Comparable<Object>) lista.get(inicio));
-		int i = inicio + 1, f = fim;
-		while (i <= f) {
-			if (pivo.compareTo((Comparable<Object>) lista.get(i)) >= 0)
-				i++;
-			else if (pivo.compareTo((Comparable<Object>) lista.get(f)) < 0)
-				f--;
-			else {
-				Object troca = lista.get(i);
-				lista.set(i, lista.get(f));
-				lista.set(f, troca);
-				i++;
-				f--;
+	public static <T extends Comparable<T>> List<T> mergeSortedLists(List<T> listaEsq, List<T> listaDir)
+	{
+		ArrayList<T> lista = new ArrayList<T>();
+
+		while (!listaEsq.isEmpty() && !listaDir.isEmpty())
+		{
+			if ((listaEsq.get(0)).compareTo(listaDir.get(0)) <= 0) {
+				lista.add(listaEsq.remove(0));
+			} else {
+				lista.add(listaDir.remove(0));
 			}
 		}
-		lista.set(inicio, lista.get(f));
-		lista.set(f, pivo);
-		return f;
+
+		while (!listaEsq.isEmpty()) {
+			lista.add(listaEsq.remove(0));
+		}
+
+		while (!listaDir.isEmpty()) {
+			lista.add(listaDir.remove(0));
+		}
+
+		return lista;
 	}
 
 }
