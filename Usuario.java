@@ -1,6 +1,7 @@
 package javaapplication1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 class Usuario implements Serializable, Comparable<Usuario>
 {
@@ -10,6 +11,7 @@ class Usuario implements Serializable, Comparable<Usuario>
 	private String city;
 	private String state;
 	private String country;
+    private ArrayList<Rating> lista;
 
 	public Usuario(int id, String city, String state, String country, int age)
 	{
@@ -18,8 +20,18 @@ class Usuario implements Serializable, Comparable<Usuario>
 		this.setCity(city);
 		this.setState(state);
 		this.setCountry(country);
+        lista = new ArrayList<>();
 	}
 
+    public Usuario()
+    {
+        
+    }
+    
+    public void addLista(Rating r) {
+        lista.add(r);
+    }
+    
 	@Override
 	public int compareTo(Usuario usuario) {
 		return this.getCountry().toUpperCase().compareTo(usuario.getCountry().toUpperCase());
