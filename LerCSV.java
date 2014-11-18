@@ -18,7 +18,7 @@ public class LerCSV
  
     public ArrayList<Livro> carregarLivros() 
     {
-        String csvFile = "C:/BX-Books.csv";
+        String csvFile = "C:/Users/UCS/Documents/BX-Books.csv";
         BufferedReader br = null;
         String line;
         ArrayList<Livro> aLivros = new ArrayList<>();
@@ -61,7 +61,7 @@ public class LerCSV
  
     public ArrayList<Usuario> carregarUsuarios() 
     {
-        String csvFile = "C:/BX-Users.csv";
+        String csvFile = "C:/Users/UCS/Documents/BX-Users.csv";
         BufferedReader br = null;
         String line;
         ArrayList<Usuario> aUsuarios = new ArrayList<>();
@@ -136,7 +136,7 @@ public class LerCSV
     
     public ArrayList<Rating> carregarRating() 
     {
-        String csvFile = "C:/BX-Book-Ratings.csv";
+        String csvFile = "C:/Users/UCS/Documents/BX-Book-Ratings.csv";
         BufferedReader br = null;
         String line;
         ArrayList<Rating> aRating = new ArrayList<>();
