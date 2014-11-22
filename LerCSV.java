@@ -10,6 +10,7 @@ public class LerCSV
 {
 
     private static final String cvsSplitBy = ",";
+    private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
  
     public LerCSV() 
     {
@@ -18,7 +19,7 @@ public class LerCSV
  
     public ArrayList<Livro> carregarLivros() 
     {
-        String csvFile = "C:/Users/UCS/Documents/BX-Books.csv";
+        String csvFile = caminho + "BX-Books.csv";
         BufferedReader br = null;
         String line;
         ArrayList<Livro> aLivros = new ArrayList<>();
@@ -61,7 +62,7 @@ public class LerCSV
  
     public ArrayList<Usuario> carregarUsuarios() 
     {
-        String csvFile = "C:/Users/UCS/Documents/BX-Users.csv";
+        String csvFile = caminho + "BX-Users.csv";
         BufferedReader br = null;
         String line;
         ArrayList<Usuario> aUsuarios = new ArrayList<>();
@@ -136,7 +137,7 @@ public class LerCSV
     
     public ArrayList<Rating> carregarRating() 
     {
-        String csvFile = "C:/Users/UCS/Documents/BX-Book-Ratings.csv";
+        String csvFile = caminho + "BX-Book-Ratings.csv";
         BufferedReader br = null;
         String line;
         ArrayList<Rating> aRating = new ArrayList<>();

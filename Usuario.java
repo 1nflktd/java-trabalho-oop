@@ -15,11 +15,11 @@ class Usuario implements Serializable, Comparable<Usuario>
 
 	public Usuario(int id, String city, String state, String country, int age)
 	{
-		this.setId(id);
-		this.setAge(age);
-		this.setCity(city);
-		this.setState(state);
-		this.setCountry(country);
+		setId(id);
+		setAge(age);
+		setCity(city);
+		setState(state);
+		setCountry(country);
         lista = new ArrayList<>();
 	}
 
@@ -28,24 +28,29 @@ class Usuario implements Serializable, Comparable<Usuario>
         
     }
     
-    public void addLista(Rating r) {
+    public void addLista(Rating r) 
+	{
         lista.add(r);
     }
     
 	@Override
-	public int compareTo(Usuario usuario) {
+	public int compareTo(Usuario usuario) 
+	{
 		return this.getCountry().toUpperCase().compareTo(usuario.getCountry().toUpperCase());
 	}
 
-	public int getId() {
+	public int getId() 
+	{
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id) 
+	{
 		this.id = id;
 	}
 
-	public int getAge() {
+	public int getAge() 
+	{
 		return age;
 	}
 

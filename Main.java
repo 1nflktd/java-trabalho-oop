@@ -8,6 +8,7 @@ public class Main {
 	private static ArrayList<Livro> aLivros;
 	private static ArrayList<Usuario> aUsuario;
 	private static ArrayList<Rating> aRating;
+    private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
 
 	private static void ler() throws IOException, ClassNotFoundException {
 		System.out.println("Ler");
@@ -17,13 +18,13 @@ public class Main {
 
 		SerializarClasse serClasse = new SerializarClasse();
 
-		aLivros = (ArrayList<Livro>) serClasse.<Livro>lerObj("C:/Users/UCS/Documents/listaLivro.obj");
-		aUsuario = (ArrayList<Usuario>) serClasse.<Usuario>lerObj("C:/Users/UCS/Documents/listaUsuario.obj");
-		aRating = (ArrayList<Rating>) serClasse.<Rating>lerObj("C:/Users/UCS/Documents/listaRating.obj");
+		aLivros = (ArrayList<Livro>) serClasse.<Livro>lerObj(caminho + "listaLivro.obj");
+		aUsuario = (ArrayList<Usuario>) serClasse.<Usuario>lerObj(caminho + "listaUsuario.obj");
+		aRating = (ArrayList<Rating>) serClasse.<Rating>lerObj(caminho + "listaRating.obj");
 	}
 	
     public static void carregarRatingUsuario()
-    {
+	{
         for (Rating r : aRating) {
             for (Usuario user : aUsuario) {
                 if (r.getUsuario_id() == user.getId()) {
@@ -33,15 +34,13 @@ public class Main {
             }
             for (Livro livro : aLivros) {
                 if (livro.getIsbn() == r.getIsbn()) {
-                    livro.addQtde();
+					livro.addQtde();
                     livro.addSoma(r.getRating());
+					break;
                 }
             }
-            /*Usuario user = new Usuario();
-            aUsuario.
-            user.getUsuarioPorId(r.getUsuario_id());;*/
-        }
-    }
+		}
+	}
     
 	public static void carregar()
 	{
@@ -52,7 +51,7 @@ public class Main {
 			aLivros = obj.carregarLivros();
 			aUsuario = obj.carregarUsuarios();
 			aRating = obj.carregarRating();
-
+			
             try{
                 //Ordenacao.mergeSort(aLivros);
                 Ordenacao.mergeSort(aUsuario);
@@ -60,15 +59,15 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("Problema ao ordenar: " + e.getMessage());
             }
-                
+			
             carregarRatingUsuario();
             
             System.out.println(aUsuario.get(0));
             
 			SerializarClasse serializar = new SerializarClasse();
-			serializar.serializarLista(aLivros, "C:/Users/UCS/Documents/listaLivro.obj");
-			serializar.serializarLista(aUsuario, "C:/Users/UCS/Documents/listaUsuario.obj");
-			serializar.serializarLista(aRating, "C:/Users/UCS/Documents/listaRating.obj");
+			serializar.serializarLista(aLivros, caminho + "listaLivro.obj");
+			serializar.serializarLista(aUsuario, caminho + "listaUsuario.obj");
+			serializar.serializarLista(aRating, caminho + "listaRating.obj");
 		} catch (IOException e) {
 			System.out.println(e);
 		}

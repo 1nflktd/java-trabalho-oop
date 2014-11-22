@@ -3,7 +3,8 @@ package javaapplication1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ordenacao {
+public class Ordenacao 
+{
 
 	public static <T extends Comparable<T>> void mergeSort(List<T> lista)
 	{
