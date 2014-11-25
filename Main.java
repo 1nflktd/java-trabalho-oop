@@ -13,9 +13,9 @@ public class Main
 	private static ArrayList<Rating> aRating;
 	
 	private static HashMap<Long, Livro> mLivros;
-	private static HashMap<Integer, Usuario> mUsuarios;
+	private static HashMap<Long, Usuario> mUsuarios;
 	
-    private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
+    private static final String caminho = "C:/UCS/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
 
 	private static void ler() throws IOException, ClassNotFoundException {
 		System.out.println("Ler");
@@ -29,30 +29,29 @@ public class Main
 		//aUsuario = (ArrayList<Usuario>) serClasse.<Usuario>lerObj(caminho + "listaUsuario.obj");
 		
 		mLivros = (HashMap<Long, Livro>) serClasse.<Livro>lerObjMap(caminho + "listaLivro.obj");
-		mUsuarios = (HashMap<Integer, Usuario>) serClasse.<Usuario>lerObjMap(caminho + "listaUsuario.obj");
+		mUsuarios = (HashMap<Long, Usuario>) serClasse.<Usuario>lerObjMap(caminho + "listaUsuario.obj");
 		
 		aRating = (ArrayList<Rating>) serClasse.<Rating>lerObjLista(caminho + "listaRating.obj");
 	}
 	
     public static void carregarRatingUsuario()
 	{
-        /*
-		for (Rating r : aRating) {
-            for (Usuario user : aUsuario) {
-                if (r.getUsuario_id() == user.getId()) {
-                    user.addLista(r);
-                    break;
-                }
+        for (Rating r : aRating) 
+        {
+            if (mUsuarios.containsKey(r.getUsuario_id())) 
+            {
+                Usuario user = mUsuarios.get(r.getUsuario_id());
+                user.addLista(r);
+                mUsuarios.put(r.getUsuario_id(), user);
             }
-            for (Livro livro : aLivros) {
-                if (livro.getIsbn() == r.getIsbn()) {
-					livro.addQtde();
-                    livro.addSoma(r.getRating());
-					break;
-                }
+            if (mLivros.containsKey(r.getIsbn())) 
+            {
+                Livro livro = mLivros.get(r.getIsbn());
+                livro.addQtde();
+                livro.addSoma(r.getRating());
+                mLivros.put(r.getIsbn(), livro);
             }
-		}
-		*/
+        }
 	}
     
 	public static void carregar()
@@ -80,8 +79,6 @@ public class Main
             carregarRatingUsuario();
             
             //System.out.println(aUsuario.get(0));
-            
-
 			
 			SerializarClasse serializar = new SerializarClasse();
 			
@@ -106,12 +103,30 @@ public class Main
 			carregar();
 		}
 		
-		for (Map.Entry<Integer, Usuario> u : mUsuarios.entrySet()) 
+        Ordenacao.mergeSort(mLivros);
+        
+        for (Map.Entry<Long, Livro> l : mLivros.entrySet())
+        {
+            System.out.println("Livro " + l.getValue().getTitulo() + " rAting  " + l.getValue().getMedia());
+        }
+        
+        /*
+		for (Map.Entry<Long, Usuario> u : mUsuarios.entrySet()) 
 		{
 			System.out.println("id " + u.getKey() + " pais " + u.getValue().getCountry());
+            //  + " " + u.getValue().getLista()
+            for (Rating r : u.getValue().getLista()) 
+            {
+                System.out.println(" " + r.getIsbn() + " " + r.getRating());
+            }
 		}
+        */
 
+        // 20 melhores avaliados
+        // 10 melhores para um pais
+        
 		
+        
 		/*
         try{
             System.out.println("Ordenar Livros");
