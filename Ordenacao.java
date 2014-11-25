@@ -1,7 +1,11 @@
 package javaapplication1;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Ordenacao 
 {
@@ -55,6 +59,80 @@ public class Ordenacao
 
 		while (!listaDir.isEmpty()) {
 			lista.add(listaDir.remove(0));
+		}
+
+		return lista;
+	}
+    
+    public static <T extends Comparable<T>> void mergeSort(HashMap<Long, T> lista)
+	{
+		if (lista.size() > 1)
+		{
+            
+            int meio = lista.size() / 2;
+            
+            int location = 0;
+
+            HashMap<Long, T> esq = new HashMap<Long, T>();
+            HashMap<Long, T> dir = new HashMap<Long, T>();
+         
+            for (Map.Entry<Long, T> obj : lista.entrySet())
+            {
+                if (location < meio)
+                {
+                    esq.put(obj.getKey(), obj.getValue());
+                } else {
+                    dir.put(obj.getKey(), obj.getValue());
+                }
+                location++;
+            }
+
+			if (dir.size() != 1) {
+				mergeSort(dir);
+			}
+			if (esq.size() != 1) {
+				mergeSort(esq);
+			}
+
+			lista.clear();
+			lista.putAll(mergeSortedLists(esq, dir));
+		}
+	}
+
+	public static <T extends Comparable<T>> HashMap<Long, T> mergeSortedLists(HashMap<Long, T> listaEsq, HashMap<Long, T> listaDir)
+	{
+		HashMap<Long, T> lista = new HashMap<Long, T>();
+
+        while(!listaEsq.isEmpty() && !listaDir.isEmpty())
+        {
+            Iterator<Map.Entry<Long, T>> iteratorEsq = listaEsq.entrySet().iterator();
+            Iterator<Map.Entry<Long, T>> iteratorDir = listaDir.entrySet().iterator();
+            Map.Entry<Long, T> tesq = iteratorEsq.next();
+            Map.Entry<Long, T> tdir = iteratorDir.next();
+            if (tesq.getValue().compareTo(tdir.getValue()) <= 0) 
+            {
+                lista.put(tesq.getKey(), tesq.getValue());
+                iteratorEsq.remove();
+            }
+            else
+            {
+                lista.put(tdir.getKey(), tdir.getValue());
+                iteratorDir.remove();
+            }
+        }
+
+		while (!listaEsq.isEmpty()) {
+            Iterator<Map.Entry<Long, T>> iteratorEsq = listaEsq.entrySet().iterator();
+            Map.Entry<Long, T> tesq = iteratorEsq.next();
+            lista.put(tesq.getKey(), tesq.getValue());
+            iteratorEsq.remove();
+		}
+
+		while (!listaDir.isEmpty()) {
+            Iterator<Map.Entry<Long, T>> iteratorDir = listaDir.entrySet().iterator();
+            Map.Entry<Long, T> tdir = iteratorDir.next();
+            lista.put(tdir.getKey(), tdir.getValue());
+            iteratorDir.remove();
 		}
 
 		return lista;
