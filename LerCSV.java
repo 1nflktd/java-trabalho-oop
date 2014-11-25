@@ -6,13 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
  
 public class LerCSV
 {
 
     private static final String cvsSplitBy = ",";
-    private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
+    private static final String caminho = "C:/Users/UCS/Documents/ArquivosCsvTrabalhoOOP/";
  
     public LerCSV() 
     {
@@ -107,12 +106,12 @@ public class LerCSV
     }
 	*/
 	
-	public HashMap<Integer, Usuario> carregarUsuarios()
+	public HashMap<Long, Usuario> carregarUsuarios()
 	{
         String csvFile = caminho + "BX-Users.csv";
         BufferedReader br = null;
         String line;
-        HashMap<Integer, Usuario> mUsuarios = new HashMap<>();
+        HashMap<Long, Usuario> mUsuarios = new HashMap<>();
         
         try 
         {
@@ -123,7 +122,7 @@ public class LerCSV
             	line = line.replaceAll("\"", "");
                 String[] usuario = line.split(cvsSplitBy);
                // System.out.println(usuario[0]);
-				int id;
+				long id;
 				try {
 					id = Integer.parseInt(usuario[0].replaceAll("\\D+",""));
 				} catch (Exception e) {
