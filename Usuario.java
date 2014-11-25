@@ -6,14 +6,14 @@ import java.util.ArrayList;
 class Usuario implements Serializable, Comparable<Usuario>
 {
 
-	private int id;
+	private long id;
 	private int age;
 	private String city;
 	private String state;
 	private String country;
     private ArrayList<Rating> lista;
 
-	public Usuario(int id, String city, String state, String country, int age)
+	public Usuario(long id, String city, String state, String country, int age)
 	{
 		setId(id);
 		setAge(age);
@@ -39,12 +39,12 @@ class Usuario implements Serializable, Comparable<Usuario>
 		return this.getCountry().toUpperCase().compareTo(usuario.getCountry().toUpperCase());
 	}
 
-	public int getId() 
+	public long getId() 
 	{
 		return id;
 	}
 
-	public void setId(int id) 
+	public void setId(long id) 
 	{
 		this.id = id;
 	}
@@ -81,5 +81,10 @@ class Usuario implements Serializable, Comparable<Usuario>
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
+    
+    public ArrayList<Rating> getLista()
+    {
+        return lista;
+    }
+    
 }
