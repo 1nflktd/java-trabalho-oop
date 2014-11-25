@@ -33,7 +33,13 @@ public class Livro implements Serializable, Comparable<Livro>
     }
     
     public double getMedia() {
-        return somaRating / qtdeRating;
+        if (qtdeRating > 0) {
+            return somaRating / qtdeRating;
+        }
+        else
+        {
+            return somaRating;
+        }
     }
     
 	public long getIsbn() {
@@ -53,8 +59,21 @@ public class Livro implements Serializable, Comparable<Livro>
 	}
     
 	@Override
-	public int compareTo(Livro livro) {
-		return this.titulo.toUpperCase().compareTo(livro.titulo.toUpperCase());
+	public int compareTo(Livro livro) 
+    {
+		//return this.titulo.toUpperCase().compareTo(livro.titulo.toUpperCase());
+        double media = this.getMedia() - livro.getMedia();
+        if (media > 0) 
+        {
+            return 1;
+        }
+        else if (media < 0)
+        {
+            return -1;
+        }
+        else {
+            return 0;
+        }
 	}
 
 }
