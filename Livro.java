@@ -1,6 +1,7 @@
 package javaapplication1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Livro implements Serializable, Comparable<Livro>
 {
@@ -10,6 +11,7 @@ public class Livro implements Serializable, Comparable<Livro>
 	private String titulo;
     private int somaRating;
     private int qtdeRating;
+    private ArrayList<Rating> lista;
 
 	public Livro()
 	{
@@ -22,9 +24,20 @@ public class Livro implements Serializable, Comparable<Livro>
 		this.setTitulo(titulo);
         somaRating = 0;
         qtdeRating = 0;
+        lista = new ArrayList<>();
 	}
 
-    public void addSoma(int valor) {
+    public void addLista(Rating r) 
+	{
+        lista.add(r);
+    }
+
+	public ArrayList<Rating> getLista()
+    {
+        return lista;
+    }
+
+	public void addSoma(int valor) {
         somaRating += valor;
     }
     
@@ -34,7 +47,7 @@ public class Livro implements Serializable, Comparable<Livro>
     
     public double getMedia() {
         if (qtdeRating > 0) {
-            return somaRating / qtdeRating;
+            return (double) somaRating / qtdeRating;
         }
         else
         {

@@ -2,7 +2,8 @@ package javaapplication1;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Main 
@@ -12,10 +13,10 @@ public class Main
 	private static ArrayList<Usuario> aUsuario;
 	private static ArrayList<Rating> aRating;
 	
-	private static HashMap<Long, Livro> mLivros;
-	private static HashMap<Long, Usuario> mUsuarios;
+	private static LinkedHashMap<Long, Livro> mLivros;
+	private static LinkedHashMap<Long, Usuario> mUsuarios;
 	
-    private static final String caminho = "C:/UCS/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
+    private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
 
 	private static void ler() throws IOException, ClassNotFoundException {
 		System.out.println("Ler");
@@ -28,8 +29,8 @@ public class Main
 		//aLivros = (ArrayList<Livro>) serClasse.<Livro>lerObj(caminho + "listaLivro.obj");
 		//aUsuario = (ArrayList<Usuario>) serClasse.<Usuario>lerObj(caminho + "listaUsuario.obj");
 		
-		mLivros = (HashMap<Long, Livro>) serClasse.<Livro>lerObjMap(caminho + "listaLivro.obj");
-		mUsuarios = (HashMap<Long, Usuario>) serClasse.<Usuario>lerObjMap(caminho + "listaUsuario.obj");
+		mLivros = (LinkedHashMap<Long, Livro>) serClasse.<Livro>lerObjMap(caminho + "listaLivro.obj");
+		mUsuarios = (LinkedHashMap<Long, Usuario>) serClasse.<Usuario>lerObjMap(caminho + "listaUsuario.obj");
 		
 		aRating = (ArrayList<Rating>) serClasse.<Rating>lerObjLista(caminho + "listaRating.obj");
 	}
@@ -38,20 +39,21 @@ public class Main
 	{
         for (Rating r : aRating) 
         {
-            if (mUsuarios.containsKey(r.getUsuario_id())) 
+			if (mUsuarios.containsKey(r.getUsuario_id())) 
+			{
+				Usuario user = mUsuarios.get(r.getUsuario_id());
+				user.addLista(r);
+				mUsuarios.put(r.getUsuario_id(), user);
+			}
+			if (mLivros.containsKey(r.getIsbn())) 
             {
-                Usuario user = mUsuarios.get(r.getUsuario_id());
-                user.addLista(r);
-                mUsuarios.put(r.getUsuario_id(), user);
-            }
-            if (mLivros.containsKey(r.getIsbn())) 
-            {
-                Livro livro = mLivros.get(r.getIsbn());
-                livro.addQtde();
-                livro.addSoma(r.getRating());
-                mLivros.put(r.getIsbn(), livro);
-            }
-        }
+				Livro livro = mLivros.get(r.getIsbn());
+				livro.addQtde();
+				livro.addSoma(r.getRating());
+				livro.addLista(r);
+				mLivros.put(r.getIsbn(), livro);
+			}
+		}
 	}
     
 	public static void carregar()
@@ -97,9 +99,12 @@ public class Main
 	}
 	
 	public static void main(String[] args) {
-		try {
+		try 
+		{
 			ler();
-		} catch (Exception e) {
+		}
+		catch (Exception e) 
+		{
 			carregar();
 		}
 		

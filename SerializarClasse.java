@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class SerializarClasse {
     
@@ -16,16 +16,16 @@ public class SerializarClasse {
         streamObj.writeObject(lista);		
     }
 
-    public void serializarLista(HashMap<?, ?> lista, String caminho) throws IOException
+    public void serializarLista(LinkedHashMap<?, ?> lista, String caminho) throws IOException
     {
         ObjectOutputStream streamObj = new ObjectOutputStream(new FileOutputStream(caminho));
         streamObj.writeObject(lista);		
     }
 	
-	public HashMap<?, ?> lerObjMap(String caminho) throws IOException, ClassNotFoundException
+	public LinkedHashMap<?, ?> lerObjMap(String caminho) throws IOException, ClassNotFoundException
     {
         ObjectInputStream stream = new ObjectInputStream(new FileInputStream(caminho));
-		return (HashMap<?, ?>) stream.readObject();
+		return (LinkedHashMap<?, ?>) stream.readObject();
     }
 	
 	public ArrayList<?> lerObjLista(String caminho) throws IOException, ClassNotFoundException

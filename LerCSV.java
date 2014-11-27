@@ -5,25 +5,25 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
  
 public class LerCSV
 {
 
     private static final String cvsSplitBy = ",";
-    private static final String caminho = "C:/Users/UCS/Documents/ArquivosCsvTrabalhoOOP/";
+    private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
  
     public LerCSV() 
     {
     	
     }
  
-	public HashMap<Long, Livro> carregarLivros()
+	public LinkedHashMap<Long, Livro> carregarLivros()
 	{
         String csvFile = caminho + "BX-Books.csv";
         BufferedReader br = null;
         String line;
-        HashMap<Long, Livro> mLivros = new HashMap<>();
+        LinkedHashMap<Long, Livro> mLivros = new LinkedHashMap<>();
         
         try 
         {
@@ -32,7 +32,7 @@ public class LerCSV
             while((line = br.readLine()) != null) 
             {
         		String[] livro = line.split(cvsSplitBy);
-    			Livro l = new Livro(Long.parseLong(livro[0].replaceAll("\\D+","")), livro[1]);
+    			Livro l = new Livro(Long.parseLong(livro[0].replaceAll("\\D+","")), livro[1].replaceAll("\"", ""));
 				mLivros.put(l.getIsbn(), l);
 				//aLivros.add(l);
             }
@@ -106,12 +106,12 @@ public class LerCSV
     }
 	*/
 	
-	public HashMap<Long, Usuario> carregarUsuarios()
+	public LinkedHashMap<Long, Usuario> carregarUsuarios()
 	{
         String csvFile = caminho + "BX-Users.csv";
         BufferedReader br = null;
         String line;
-        HashMap<Long, Usuario> mUsuarios = new HashMap<>();
+        LinkedHashMap<Long, Usuario> mUsuarios = new LinkedHashMap<>();
         
         try 
         {
