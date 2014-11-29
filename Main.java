@@ -16,7 +16,7 @@ public class Main
 	private static LinkedHashMap<Long, Usuario> mUsuarios;
 	
 	//private static LinkedHashMap<String, ArrayList<Rating>> mPaises = new LinkedHashMap<>();
-	private static LinkedHashMap<String, Pais> mPaises;
+	private static LinkedHashMap<String, Pais> mPaises = new LinkedHashMap<>();
 	
     private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
 
@@ -31,6 +31,7 @@ public class Main
 
 		//aLivros = (ArrayList<Livro>) serClasse.<Livro>lerObj(caminho + "listaLivro.obj");
 		//aUsuario = (ArrayList<Usuario>) serClasse.<Usuario>lerObj(caminho + "listaUsuario.obj");
+		mPaises = (LinkedHashMap<String, Pais>) serClasse.<Pais>lerObjMap(caminho + "listaPais.obj");
 		
 		mLivros = (LinkedHashMap<Long, Livro>) serClasse.<Livro>lerObjMap(caminho + "listaLivro.obj");
 		mUsuarios = (LinkedHashMap<Long, Usuario>) serClasse.<Usuario>lerObjMap(caminho + "listaUsuario.obj");
@@ -38,7 +39,6 @@ public class Main
 		
 		aRating = (ArrayList<Rating>) serClasse.<Rating>lerObjLista(caminho + "listaRating.obj");
 
-		mPaises = (LinkedHashMap<String, Pais>) serClasse.<Pais>lerObjMap(caminho + "listaPais.obj");
 	}
 	
     public static void carregarRatingUsuario()
@@ -109,8 +109,6 @@ public class Main
 			mLivros = obj.carregarLivros();
 			mUsuarios = obj.carregarUsuarios();
 			
-			mPaises = new LinkedHashMap<>();
-			
 			aRating = obj.carregarRating();
 			
             try{
@@ -130,11 +128,12 @@ public class Main
 			//serializar.serializarLista(aLivros, caminho + "listaLivro.obj");
 			//serializar.serializarLista(aUsuario, caminho + "listaUsuario.obj");
 			
+			serializar.serializarLista(mPaises, caminho + "listaPais.obj");
+
 			serializar.serializarLista(mLivros, caminho + "listaLivro.obj");
 			serializar.serializarLista(mUsuarios, caminho + "listaUsuario.obj");
 			serializar.serializarLista(aRating, caminho + "listaRating.obj");
 
-			serializar.serializarLista(mPaises, caminho + "listaPais.obj");
 		} catch (IOException e) {
 			System.out.println(e);
 		}
@@ -184,6 +183,7 @@ public class Main
 		}
 		catch (Exception e) 
 		{
+			System.out.println(e.getMessage());
 			carregar();
 		}
 		

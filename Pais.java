@@ -6,13 +6,14 @@
 
 package javaapplication1;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Henrique
  */
-public class Pais 
+public class Pais implements Serializable
 {
 	private String nome;
 	private ArrayList<Rating> listaRating;
