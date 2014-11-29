@@ -135,7 +135,7 @@ public class Ordenacao
 				break;
 			}
 			
-			if (entryEsq.getValue().compareTo(entryDir.getValue()) <= 0)
+			if (entryEsq.getValue().compareTo(entryDir.getValue()) > 0)
 			{
 				lista.put(entryEsq.getKey(), entryEsq.getValue());
 				iterEsq.remove();

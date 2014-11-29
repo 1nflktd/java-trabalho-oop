@@ -28,6 +28,12 @@ public class SerializarClasse {
 		return (LinkedHashMap<?, ?>) stream.readObject();
     }
 	
+	public LinkedHashMap<String, ArrayList<Rating>> lerObjMapPaises(String caminho) throws IOException, ClassNotFoundException
+    {
+        ObjectInputStream stream = new ObjectInputStream(new FileInputStream(caminho));
+		return (LinkedHashMap<String, ArrayList<Rating>>) stream.readObject();
+    }
+	
 	public ArrayList<?> lerObjLista(String caminho) throws IOException, ClassNotFoundException
     {
         ObjectInputStream stream = new ObjectInputStream(new FileInputStream(caminho));
