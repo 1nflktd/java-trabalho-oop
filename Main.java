@@ -8,23 +8,25 @@ import java.util.Map;
 public class Main 
 {
 	
-	private static ArrayList<Livro> aLivros;
-	private static ArrayList<Usuario> aUsuario;
+	//private static ArrayList<Livro> aLivros;
+	//private static ArrayList<Usuario> aUsuario;
 	private static ArrayList<Rating> aRating;
 	
 	private static LinkedHashMap<Long, Livro> mLivros;
 	private static LinkedHashMap<Long, Usuario> mUsuarios;
 	
-	private static LinkedHashMap<String, ArrayList<Rating>> mPaises = new LinkedHashMap<>();
+	//private static LinkedHashMap<String, ArrayList<Rating>> mPaises = new LinkedHashMap<>();
+	private static LinkedHashMap<String, Pais> mPaises;
 	
     private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
 
-	private static void ler() throws IOException, ClassNotFoundException {
+	private static void ler() throws IOException, ClassNotFoundException 
+	{
 		System.out.println("Ler");
-		aLivros = null;
-		aUsuario = null;
+		//aLivros = null;
+		//aUsuario = null;
 		aRating = null;
-
+		
 		SerializarClasse serClasse = new SerializarClasse();
 
 		//aLivros = (ArrayList<Livro>) serClasse.<Livro>lerObj(caminho + "listaLivro.obj");
@@ -32,9 +34,11 @@ public class Main
 		
 		mLivros = (LinkedHashMap<Long, Livro>) serClasse.<Livro>lerObjMap(caminho + "listaLivro.obj");
 		mUsuarios = (LinkedHashMap<Long, Usuario>) serClasse.<Usuario>lerObjMap(caminho + "listaUsuario.obj");
-		mPaises = (LinkedHashMap<String, ArrayList<Rating>>) serClasse.lerObjMapPaises(caminho + "listaPaises.obj");
+		//mPaises = (LinkedHashMap<String, ArrayList<Rating>>) serClasse.lerObjMapPaises(caminho + "listaPaises.obj");
 		
 		aRating = (ArrayList<Rating>) serClasse.<Rating>lerObjLista(caminho + "listaRating.obj");
+
+		mPaises = (LinkedHashMap<String, Pais>) serClasse.<Pais>lerObjMap(caminho + "listaPais.obj");
 	}
 	
     public static void carregarRatingUsuario()
@@ -60,19 +64,23 @@ public class Main
     
 	public static void addListaPaises(String pais, Rating rating) 
 	{
-		ArrayList<Rating> listaRatings;
-		listaRatings = mPaises.get(pais);
-		if(listaRatings == null) 
+		Pais p = mPaises.get(pais);
+		if (p == null) 
 		{
-			listaRatings = new ArrayList<>();
+			p = new Pais(pais);
 		}
-		listaRatings.add(rating);
-		mPaises.put(pais, listaRatings);
+		p.addListaRating(rating);
+		mPaises.put(pais, p);
 	}
 	
 	public static LinkedHashMap<Long, Livro> calcularRatingLivroPais(String pais)
 	{
-		ArrayList<Rating> listaRatingPais = mPaises.get(pais);
+		Pais p = mPaises.get(pais);
+		if (p == null) 
+		{
+			return null;
+		}
+		ArrayList<Rating> listaRatingPais = p.getListaRating();
 		LinkedHashMap<Long, Livro> listaRatingLivro = new LinkedHashMap<>();
 		for (Rating r : listaRatingPais)
 		{
@@ -101,6 +109,8 @@ public class Main
 			mLivros = obj.carregarLivros();
 			mUsuarios = obj.carregarUsuarios();
 			
+			mPaises = new LinkedHashMap<>();
+			
 			aRating = obj.carregarRating();
 			
             try{
@@ -122,12 +132,9 @@ public class Main
 			
 			serializar.serializarLista(mLivros, caminho + "listaLivro.obj");
 			serializar.serializarLista(mUsuarios, caminho + "listaUsuario.obj");
-
-			serializar.serializarLista(mPaises, caminho + "listaPaises.obj");
-			
 			serializar.serializarLista(aRating, caminho + "listaRating.obj");
-			
-			
+
+			serializar.serializarLista(mPaises, caminho + "listaPais.obj");
 		} catch (IOException e) {
 			System.out.println(e);
 		}
@@ -182,7 +189,7 @@ public class Main
 		
         // 10 melhores para um pais
 		mostrarMelhoresAvaliados();
-        mostrarMelhoresPais("usa");
+        mostrarMelhoresPais("canada");
 		
 	}
 }
