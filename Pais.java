@@ -46,4 +46,9 @@ public class Pais implements Serializable
 		return listaUsuario;
 	}
 	
+	public int getTamanhoListaUsuarios()
+	{
+		return listaUsuario.size();
+	}
+	
 }

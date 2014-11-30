@@ -2,8 +2,16 @@ package javaapplication1;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Main 
 {
@@ -57,12 +65,12 @@ public class Main
 				livro.addLista(r);
 				mLivros.put(r.getIsbn(), livro);
 
-				addListaPaises(user.getCountry(), r);
+				addListaPaises(user.getCountry(), r, user);
 			}
 		}
 	}
     
-	public static void addListaPaises(String pais, Rating rating) 
+	public static void addListaPaises(String pais, Rating rating, Usuario user) 
 	{
 		Pais p = mPaises.get(pais);
 		if (p == null) 
@@ -70,6 +78,7 @@ public class Main
 			p = new Pais(pais);
 		}
 		p.addListaRating(rating);
+		p.addListaUsuario(user);
 		mPaises.put(pais, p);
 	}
 	
@@ -176,6 +185,49 @@ public class Main
         }
 	}
 	
+	static <K,V extends Comparable<? super V>> 
+	List<Entry<K, V>> entriesSortedByValues(Map<K,V> map) {
+		List<Entry<K,V>> sortedEntries = new ArrayList<Entry<K,V>>(map.entrySet());
+		Collections.sort(sortedEntries, 
+			new Comparator<Entry<K,V>>() {
+				@Override
+				public int compare(Entry<K,V> e1, Entry<K,V> e2) {
+					return e2.getValue().compareTo(e1.getValue());
+				}
+			}
+		);
+
+		return sortedEntries;
+	}
+	
+	public static void mostrarPaisesComMaisLeitores()
+	{
+		LinkedHashMap<String, Pais> aux = mPaises;
+		Map<String, Integer> listaAux = new TreeMap<>();
+        for (Map.Entry<String, Pais> a : aux.entrySet())
+		{
+			listaAux.put(a.getKey(), a.getValue().getTamanhoListaUsuarios());
+		}
+		List<Entry<String, Integer>> listaSorteada = entriesSortedByValues(listaAux);
+		int counter = 0;
+		TreeMap<String, Integer> listaFinal = new TreeMap<>();
+		
+		for(Entry<String, Integer> e : listaSorteada)
+		{
+			if (counter >= 10) 
+			{
+				break;
+			}
+			counter ++;
+			listaFinal.put(e.getKey(), e.getValue());
+		}
+		
+		for (Map.Entry<String, Integer> a : listaFinal.entrySet())
+		{
+			System.out.println("Pais " + a.getKey() + " Numero de leitores " + a.getValue());
+		}
+	}
+	
 	public static void main(String[] args) {
 		try 
 		{
@@ -187,9 +239,8 @@ public class Main
 			carregar();
 		}
 		
-        // 10 melhores para um pais
-		mostrarMelhoresAvaliados();
-        mostrarMelhoresPais("canada");
-		
+		//mostrarMelhoresAvaliados();
+        //mostrarMelhoresPais("canada");
+		mostrarPaisesComMaisLeitores();
 	}
 }
