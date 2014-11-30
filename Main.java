@@ -228,6 +228,71 @@ public class Main
 		}
 	}
 	
+	public static void recomendarLivrosParaUsuario(long usuario_id)
+	{
+		Usuario user = mUsuarios.get(usuario_id);
+		if(user == null)
+		{
+			System.out.println("Usuario nao encontrado!");
+		}
+		else
+		{
+			ArrayList<Rating> lista = user.getLista();
+			Livro livroComMaiorNota = null;
+			int maiorNota = 0;
+			for (Rating r : lista)
+			{
+				if (r.getRating() >= maiorNota) 
+				{
+					Livro l = mLivros.get(r.getIsbn());
+					if (l != null) 
+					{
+						maiorNota = r.getRating();
+						livroComMaiorNota = l;
+					}
+				}
+			}
+			if (livroComMaiorNota != null) 
+			{
+				ArrayList<Rating> lista1 = livroComMaiorNota.getLista();
+				int maiorRating = 0;
+				Usuario usuarioMaiorRating = null;
+				for (Rating r : lista1)
+				{
+					if (r.getRating() >= maiorRating && r.getUsuario_id() != usuario_id) 
+					{
+						Usuario user1 = mUsuarios.get(r.getUsuario_id());
+						if (user1 != null && user1.getLista().size() > 1) 
+						{
+							usuarioMaiorRating = user1;
+							maiorRating = r.getRating();
+						}
+					}
+				}
+				
+				if (usuarioMaiorRating != null) 
+				{
+					ArrayList<Rating> lista2 = usuarioMaiorRating.getLista();
+					for(Rating r : lista2)
+					{
+						if (r.getRating() >= 8) 
+						{
+							Livro l = mLivros.get(r.getIsbn());
+							if (l != null) 
+							{
+								System.out.println("Livro " + l.getTitulo() + " ISBN " + l.getIsbn() + " Rating " + r.getRating());
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				System.out.println("Nao há como recomendar livros para esse usuário!");
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		try 
 		{
@@ -241,6 +306,7 @@ public class Main
 		
 		//mostrarMelhoresAvaliados();
         //mostrarMelhoresPais("canada");
-		mostrarPaisesComMaisLeitores();
+		//mostrarPaisesComMaisLeitores();
+		recomendarLivrosParaUsuario(276747);
 	}
 }
