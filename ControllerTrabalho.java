@@ -12,13 +12,11 @@ public class ControllerTrabalho
 {
 	
 	private static ArrayList<Rating> aRating;
-	
 	private static LinkedHashMap<Long, Livro> mLivros;
 	private static LinkedHashMap<Long, Usuario> mUsuarios;
-	
 	private static LinkedHashMap<String, Pais> mPaises = new LinkedHashMap<>();
-	
-    private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
+
+	private static final String caminho = "C:/Users/Henrique/Documents/ArquivosCsvTrabalhoOOP/";
 
 	public static void ler() throws IOException, ClassNotFoundException 
 	{
@@ -87,7 +85,7 @@ public class ControllerTrabalho
 		return listaRatingLivro;
 	}
 	
-	public static void carregar()
+	public static void carregar() throws Exception
 	{
 		try 
 		{
@@ -100,8 +98,11 @@ public class ControllerTrabalho
             try
 			{
                 Ordenacao.mergeSort(aRating);
-            } catch (Exception e) {
-                System.out.println("Problema ao ordenar: " + e.getMessage());
+            } 
+			catch (Exception e) 
+			{
+                //System.out.println("Problema ao ordenar: " + e.getMessage());
+				throw new Exception ("Problema ao ordenar: " + e.getMessage());
             }
 			
             carregarRatingUsuario();
@@ -115,45 +116,52 @@ public class ControllerTrabalho
 		}
 		catch (IOException e) 
 		{
-			System.out.println(e);
+			//System.out.println(e);
+			throw new Exception(e);
 		}
 	}
 	
-	public static void mostrarMelhoresAvaliados()
+	public static LinkedHashMap<Long, Livro> obterMelhorAvaliados()
 	{
 		Ordenacao.mergeSort(mLivros);
-		System.out.println("20 melhores avaliados");
 		int counter = 0;
 		double mediaAnt = 0;
+		LinkedHashMap<Long, Livro> aux = new LinkedHashMap<>();
         for (Map.Entry<Long, Livro> l : mLivros.entrySet())
         {
 			if (counter >= 10 && mediaAnt != l.getValue().getMedia()) 
 			{
 				break;
 			}
-            System.out.println("Livro " + l.getValue().getTitulo() + " Rating  " + l.getValue().getMedia());
+			aux.put(l.getValue().getIsbn(), l.getValue());
 			counter ++;
 			mediaAnt = l.getValue().getMedia();
         }
+		return aux;
 	}
-	
-	public static void mostrarMelhoresPais(String pais)
+
+	public static LinkedHashMap<Long, Livro> obterMelhoresPais(String pais) throws Exception
 	{
-		System.out.println("10 melhores para um pais");
 		LinkedHashMap<Long, Livro> listaLivros = calcularRatingLivroPais(pais);
+		if (listaLivros == null) 
+		{
+			throw new Exception("Nenhum livro encontrado para esse pais!");
+		}
 		Ordenacao.mergeSort(listaLivros);
 		int counter = 0;
 		double mediaAnt = 0;
+		LinkedHashMap<Long, Livro> aux = new LinkedHashMap<>();
         for (Map.Entry<Long, Livro> l : listaLivros.entrySet())
         {
 			if (counter >= 10 && mediaAnt != l.getValue().getMedia()) 
 			{
 				break;
 			}
-            System.out.println("Livro " + l.getValue().getTitulo() + " Rating  " + l.getValue().getMedia());
+			aux.put(l.getValue().getIsbn(), l.getValue());
 			counter ++;
 			mediaAnt = l.getValue().getMedia();
         }
+		return aux;
 	}
 	
 	static <K,V extends Comparable<? super V>> 
@@ -164,7 +172,7 @@ public class ControllerTrabalho
 		return sortedEntries;
 	}
 	
-	public static void mostrarPaisesComMaisLeitores()
+	public static TreeMap<String, Integer> obterPaisesComMaisLeitores()
 	{
 		LinkedHashMap<String, Pais> aux = mPaises;
 		Map<String, Integer> listaAux = new TreeMap<>();
@@ -175,7 +183,6 @@ public class ControllerTrabalho
 		List<Map.Entry<String, Integer>> listaSorteada = entriesSortedByValues(listaAux);
 		int counter = 0;
 		TreeMap<String, Integer> listaFinal = new TreeMap<>();
-		
 		for(Map.Entry<String, Integer> e : listaSorteada)
 		{
 			if (counter >= 10) 
@@ -185,19 +192,17 @@ public class ControllerTrabalho
 			counter ++;
 			listaFinal.put(e.getKey(), e.getValue());
 		}
-		
-		for (Map.Entry<String, Integer> a : listaFinal.entrySet())
-		{
-			System.out.println("Pais " + a.getKey() + " Numero de leitores " + a.getValue());
-		}
-	}
-	
-	public static void recomendarLivrosParaUsuario(long usuario_id)
+
+		return listaFinal;
+	}	
+
+	public static LinkedHashMap<Long, Livro> recomendarLivrosParaUsuario(long usuario_id) throws Exception
 	{
 		Usuario user = mUsuarios.get(usuario_id);
+		LinkedHashMap<Long, Livro> aux = new LinkedHashMap<>();
 		if(user == null)
 		{
-			System.out.println("Usuario nao encontrado!");
+			throw new Exception("Usuario nao encontrado!");
 		}
 		else
 		{
@@ -244,17 +249,22 @@ public class ControllerTrabalho
 							Livro l = mLivros.get(r.getIsbn());
 							if (l != null) 
 							{
-								System.out.println("Livro " + l.getTitulo() + " ISBN " + l.getIsbn() + " Rating " + r.getRating());
+								aux.put(l.getIsbn(), l);
 							}
 						}
 					}
 				}
+				else
+				{
+					throw new Exception("Nao foi possivel recomendar livros para esse usuario!");
+				}
 			}
 			else
 			{
-				System.out.println("Nao há como recomendar livros para esse usuário!");
+				throw new Exception("Nao foi possivel recomendar livros para esse usuario!");
 			}
 		}
+		return aux;
 	}
-	
+		
 }

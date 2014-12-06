@@ -16,18 +16,21 @@ public class Ordenacao
 			List<T> temp = lista.subList(0, lista.size() / 2);
 
 			ArrayList<T> esq = new ArrayList<>(0);
-			for (T obj : temp) {
+			for (T obj : temp) 
+			{
 				esq.add(obj);
 			}
 
 			temp = lista.subList(lista.size() / 2, lista.size());
 
 			ArrayList<T> dir = new ArrayList<>(0);
-			for (T obj : temp) {
+			for (T obj : temp) 
+			{
 				dir.add(obj);
 			}
 
-			if (dir.size() != 1) {
+			if (dir.size() != 1) 
+			{
 				mergeSort(dir);
 			}
 			if (esq.size() != 1) {
@@ -45,18 +48,23 @@ public class Ordenacao
 
 		while (!listaEsq.isEmpty() && !listaDir.isEmpty())
 		{
-			if ((listaEsq.get(0)).compareTo(listaDir.get(0)) <= 0) {
+			if ((listaEsq.get(0)).compareTo(listaDir.get(0)) <= 0) 
+			{
 				lista.add(listaEsq.remove(0));
-			} else {
+			}
+			else
+			{
 				lista.add(listaDir.remove(0));
 			}
 		}
 
-		while (!listaEsq.isEmpty()) {
+		while (!listaEsq.isEmpty()) 
+		{
 			lista.add(listaEsq.remove(0));
 		}
 
-		while (!listaDir.isEmpty()) {
+		while (!listaDir.isEmpty()) 
+		{
 			lista.add(listaDir.remove(0));
 		}
 

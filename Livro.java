@@ -18,10 +18,10 @@ public class Livro implements Serializable, Comparable<Livro>
 
 	}
 
-	public Livro(long isbn, String titulo)
+	public Livro(long isbn1, String titulo1)
 	{
-		this.setIsbn(isbn);
-		this.setTitulo(titulo);
+		isbn = isbn1;
+		titulo = titulo1;
         somaRating = 0;
         qtdeRating = 0;
         lista = new ArrayList<>();
@@ -37,16 +37,20 @@ public class Livro implements Serializable, Comparable<Livro>
         return lista;
     }
 
-	public void addSoma(int valor) {
+	public void addSoma(int valor) 
+	{
         somaRating += valor;
     }
     
-    public void addQtde() {
+    public void addQtde() 
+	{
         qtdeRating++;
     }
     
-    public double getMedia() {
-        if (qtdeRating > 0) {
+    public double getMedia() 
+	{
+        if (qtdeRating > 0) 
+		{
             return (double) somaRating / qtdeRating;
         }
         else
@@ -55,19 +59,23 @@ public class Livro implements Serializable, Comparable<Livro>
         }
     }
     
-	public long getIsbn() {
+	public long getIsbn() 
+	{
 		return isbn;
 	}
 
-	public void setIsbn(long isbn) {
+	public void setIsbn(long isbn) 
+	{
 		this.isbn = isbn;
 	}
 
-	public String getTitulo() {
+	public String getTitulo() 
+	{
 		return titulo;
 	}
 
-	public void setTitulo(String titulo) {
+	public void setTitulo(String titulo) 
+	{
 		this.titulo = titulo;
 	}
     
